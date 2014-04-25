@@ -1,6 +1,7 @@
 from explorers import XCodeProjectExplorer
 import os
 import git
+import fnmatch
 
 DEFAULT_PROJECTS_PATH = "/XProjExplorer"
 
@@ -31,15 +32,22 @@ class Project(object):
         self.repo_path = os.path.abspath(os.getcwd())
 
     def getProjectTargets(self):
+        # from xcodeprojectexplorer
         pass
 
     def getBuildConfiguration(self):
+        # from xcodeprojectexplorer
         pass
 
-    def checkCocoapods(self):
-        pass
+    def checkCocoapodsExisting(self):
+        for root, dirnames, filenames in os.walk(self.repo_path):
+            if len(fnmatch.filter(filenames, '*.podspec')) != 0:
+                return True
+            else:
+                return False
 
     def getWorkspaces(self):
         pass
 
-p = Project("https://github.com/1000Memories/TMQuiltView")
+p = Project("https://github.com/CocoaPods/CocoaPodsExampleLibrary")
+print p.checkCocoapodsExisting()

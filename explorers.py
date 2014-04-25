@@ -34,8 +34,6 @@ class XCodeProjectExplorer(object):
         self.cache.expireTime = CACHE_EXPIRE_TIME
         self.cache.lockExpireTime = LOCK_EXPIRE_TIMEOUT
 
-    def checkCocoapodsExisting(self):
-        pass
 
     def _obtainXcodeProjectFiles(self, clonePath):
         projectFiles = []
@@ -45,10 +43,6 @@ class XCodeProjectExplorer(object):
         return projectFiles
 
     def parseProjectTargets(self, project):
-        vs = VCS()
-        cloning_result = vs.chekoutProject(project)
-        if cloning_result != VCS.SUCCESS:
-            return cloning_result
         projectsTargets = self.findProjectTargets(project)
         return projectsTargets
 
