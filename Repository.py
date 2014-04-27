@@ -14,6 +14,7 @@ class Repo(object):
     repo_name = ""
     work_dir = ""
     workspaces = []
+    xcodeproj = []
 
     def __init__(self, repo_url):
         self.repo_url = repo_url
@@ -33,15 +34,15 @@ class Repo(object):
         self.repo_path = os.path.abspath(os.getcwd())
 
     def getWorkspaces(self):
-        result = []
         for root, dirnames, filenames in os.walk(self.repo_path):
             for dirname in fnmatch.filter(dirnames, "*.xcworkspace"):
                 self.workspaces.append(os.path.abspath(dirname))
-        os.chdir(self.workspaces[0])
-        for root, dirnames, filenames in os.walk(os.getcwd()):
-            for filename in filenames:
-                result.append(filename)
 
-        xcodeproj = minidom.parse(result[0]).getElementsByTagName("FileRef")[0].attributes['location'].value
-
-        return result
+        for w in self.workspaces:
+            os.chdir(w)
+            data = fnmatch.filter(os.listdir("."), "*.xcworkspacedata")[0]
+            xml = minidom.parse(data)
+            file_refs = xml.getElementsByTagName("FileRef")
+            for f in file_refs:
+                self.xcodeproj.append(f.attributes['location'].value)
+        return self.xcodeproj
