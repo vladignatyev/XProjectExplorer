@@ -1,5 +1,6 @@
 import os
 import git
+import fnmatch
 
 __author__ = 'prozac631'
 
@@ -11,7 +12,7 @@ class Repo(object):
     repo_url = ""
     repo_name = ""
     work_dir = ""
-    workspaces = []
+    workspace = ""
     xcodeproj = []
 
     def __init__(self, url):
@@ -33,5 +34,8 @@ class Repo(object):
 
         self.repo_path = os.path.abspath(os.getcwd())
 
-    def getWorkspaces(self):
-        pass
+        for root, dirnames, filenames in os.walk(self.repo_path):
+            dir = fnmatch.filter(dirnames, "*.xcworkspace")[0]
+            os.chdir(dir)
+            w = os.path.abspath("contents.xcworkspacedata")
+            break

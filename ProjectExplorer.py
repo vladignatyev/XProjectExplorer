@@ -1,27 +1,40 @@
-from Repository import Repo
+import os
+import fnmatch
+from Workspace import Workspace
+
+NO_PROJECTS = "No projects in repo"
 
 __author__ = 'prozac631'
 
 
 class ProjectExplorer(object):
 
-    path = ""
-    urls = []
-    repos = []
+    class Error(Exception):
+        pass
 
-    def __init__(self, path):
-        self.path = path
+    workspaces = []
+    projects = []
+
+    def __init__(self):
+        pass
+
+    def explore(self, path):
         try:
-            f = open(self.path)
+            os.chdir(path)
         except IOError:
-            raise IOError("There is no such file")
+            print "There is no such directory"
 
-        for line in f:
-            url = line.split("\n")[0]
-            self.urls.append(url)
+        for root, dirnames, filenames in os.walk(os.getcwd()):
+            for dirname in fnmatch.filter(dirnames, "*.xcworkspace"):
+                os.chdir(dirname)
+                path = os.path.abspath("contents.xcworkspacedata")
+                w = Workspace(path)
+                self.workspaces.append(w)
 
-    def get_repos(self):
-        for url in self.urls:
-            repo = Repo(url)
-            self.repos.append(repo)
-        return self.repos
+    @property
+    def workspaces(self):
+        return self.workspaces
+
+    @property
+    def projects(self):
+        return self.projects
