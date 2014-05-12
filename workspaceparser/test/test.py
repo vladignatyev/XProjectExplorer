@@ -9,7 +9,7 @@ class WorkspaceParserTestCase(unittest.TestCase):
 		return parser
 
 	def test_fixture_GraphSketcher(self):
-		p = self.load(WorkspaceParser(), 'tests/GraphSketcher.xml')
+		p = self.load(WorkspaceParser(), 'test/GraphSketcher.xml')
 		self.assertIn(WorkspaceParser.FileRefItem('group:GraphSketcher/iPad/GraphSketcher-iPad.xcodeproj'),\
 		p.workspace.filerefs)
 
@@ -19,7 +19,7 @@ class WorkspaceParserTestCase(unittest.TestCase):
 		self.assertEquals(len(p.workspace.filerefs), 1)
 
 	def test_fixture_AFNetworking(self):
-		p = self.load(WorkspaceParser(), 'tests/AFNetworking.xml')
+		p = self.load(WorkspaceParser(), 'test/AFNetworking.xml')
 		self.assertIn(WorkspaceParser.FileRefItem('group:Tests/AFNetworking Tests.xcodeproj'),\
 		p.workspace.filerefs)
 		self.assertIn(WorkspaceParser.FileRefItem('group:Example/AFNetworking iOS Example.xcodeproj'),\
@@ -28,16 +28,16 @@ class WorkspaceParserTestCase(unittest.TestCase):
 		self.assertIn(WorkspaceParser.FileRefItem('group:AFNetworking.h'),\
 		p.workspace.group('AFNetworking').filerefs)
 
-		self.assertEquals(len(p.workspace.group('AFNetworking').groups), 6)
+		self.assertEquals(len(p.workspace.group('AFNetworking').groups), 5)
 
 
 	def test_sec_BillionLaughs(self):
 		with self.assertRaises(EntitiesForbidden):
-			p = self.load(WorkspaceParser(), 'tests/sec_BillionLaughs.xml')
+			p = self.load(WorkspaceParser(), 'test/sec_BillionLaughs.xml')
 
 	def test_sec_ExternalEntity(self):
 		with self.assertRaises(EntitiesForbidden):
-			p = self.load(WorkspaceParser(), 'tests/sec_ExternalEntity.xml')
+			p = self.load(WorkspaceParser(), 'test/sec_ExternalEntity.xml')
 	
 
 if __name__ == '__main__':

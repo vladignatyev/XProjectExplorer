@@ -1,16 +1,3 @@
-About
-=====
-```workspaceparser``` is the Python package supposed to parse XCode workspace 
-files.
-It uses ```defusedxml``` package to prevent XML parser from known 
-vulnerabilities.
-
-To use it safely while parsing untrusted data, always check XML file size, 
-because it could be one of DoS attack scenario!
-
-Usage example
-===
-```
 from workspaceparser import Parser as WorkspaceParser
 
 p = WorkspaceParser()
@@ -22,4 +9,3 @@ print p.workspace.version  # should print '1.0'
 print filter(lambda fileref: fileref.path.endswith('.xcodeproj'), p.workspace.filerefs)  # should print all xcodeprojects
 for group in p.workspace.groups:
 	print group
-```
