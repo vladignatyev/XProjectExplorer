@@ -64,8 +64,8 @@ class Parser(object):
 		for child in groupTag:
 			if child.tag == Parser.FileRefItem.TAG:
 				group.filerefs.append(self._parse_fileref(child))
-			if child.tag == Parser.GroupItem.TAG:
-				group.filerefs.append(self._parse_group(child))
+			elif child.tag == Parser.GroupItem.TAG:
+				group.groups.append(self._parse_group(child))
 			else:
 				raise Parser.Error('Unsupported tag %s' % child.tag)
 		return group

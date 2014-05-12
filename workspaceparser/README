@@ -20,6 +20,6 @@ with open('workspacexmlfile', 'r') as f:
 print p.workspace.version  # should print '1.0'
 print p.workspace.filerefs  # should print all FileRef found
 
-print filter(lambda fileref: fileref.endswith('.xcodeproject'),
+print filter(lambda fileref: fileref.path.endswith('.xcodeproject'),
 p.workspace.filerefs)  # should print all xcodeprojects
 ```
