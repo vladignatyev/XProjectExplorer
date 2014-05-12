@@ -14,12 +14,12 @@ Usage example
 from workspaceparser import Parser as WorkspaceParser
 
 p = WorkspaceParser()
-with open('workspacexmlfile', 'r') as f:
+with open('test/AFNetworking.xml', 'r') as f:
 	p.parse(f.read())
 
 print p.workspace.version  # should print '1.0'
-print p.workspace.filerefs  # should print all FileRef found
 
-print filter(lambda fileref: fileref.path.endswith('.xcodeproject'),
-p.workspace.filerefs)  # should print all xcodeprojects
+print filter(lambda fileref: fileref.path.endswith('.xcodeproj'), p.workspace.filerefs)  # should print all xcodeprojects
+for group in p.workspace.groups:
+	print group
 ```
