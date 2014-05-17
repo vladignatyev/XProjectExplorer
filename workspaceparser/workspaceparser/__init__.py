@@ -26,7 +26,7 @@ class Parser(object):
         TAG = 'Group'
 
         def __init__(self, location, name, filerefs=(), groups=()):
-            self.locationType, self.path = location.split(':')
+            self.locationType, self.path = location.split(':', 1)
             if not self.locationType or not name:
                 raise Parser.Error("GroupItem Error. Passed parameters: %s",
                                    {'location': location, 'name': name,
@@ -48,7 +48,7 @@ class Parser(object):
 
         def __init__(self, location):
             self.location = location
-            self.locationType, self.path = location.split(':')
+            self.locationType, self.path = location.split(':', 1)
 
         def __eq__(self, other):
             return other.locationType == self.locationType and self.path ==\

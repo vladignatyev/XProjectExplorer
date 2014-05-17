@@ -30,6 +30,9 @@ class WorkspaceParserTestCase(unittest.TestCase):
 
 		self.assertEquals(len(p.workspace.group('AFNetworking').groups), 5)
 
+	def test_recursion_bug(self):
+		p = self.load(WorkspaceParser(), 'test/bugRecursionDepth.xml')
+		self.assertIn(WorkspaceParser.FileRefItem('group:TMQuiltViewDemo/TMQuiltViewDemo.xcodeproj'), p.workspace.filerefs)
 
 	def test_sec_BillionLaughs(self):
 		with self.assertRaises(EntitiesForbidden):
